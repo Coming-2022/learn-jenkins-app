@@ -63,7 +63,6 @@ pipeline {
                             reuseNode true
                         }
                     }
-
                     steps {
                         sh '''
                             npm install serve
@@ -72,12 +71,12 @@ pipeline {
                             npx playwright test  --reporter=html
                         '''
                     }
+                }
                 
             }
         }
-        
-        
     }
+    
     post {
         always {
             junit 'test-results/junit.xml'
