@@ -2,6 +2,10 @@ pipeline {
     agent any
 
     stages {
+        /* 
+        This is a comment.
+        It is using for jenkins build.
+        */
         stage('Preparation') {
             agent{
                 docker {
