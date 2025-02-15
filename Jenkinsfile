@@ -2,6 +2,24 @@ pipeline {
     agent any
 
     stages {
+        stage('Preparation') {
+            agent{
+                docker {
+                    image 'node:18-alpine'
+                    reuseNode true
+                }
+            }
+            steps {
+                echo 'Preparation Steps'
+                sh '''
+                    ls -la
+                    node --version
+                    npm --version
+                    npm ci
+                    npm test
+                '''
+            }
+        }
         stage('Build') {
             agent{
                 docker {
@@ -13,9 +31,6 @@ pipeline {
                 echo 'Start Steps'
                 sh '''
                     ls -la
-                    node --version
-                    npm --version
-                    npm ci
                     npm run build
                 '''
             }
@@ -31,7 +46,6 @@ pipeline {
                 echo 'Test Steps'
                 sh '''
                     test -f build/index.html
-                    npm test
                 '''
             }
         }
